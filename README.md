@@ -41,8 +41,8 @@ the mounted project. Network access is limited to the declared JetBrains
 services; project dependencies may need additional kits or sandbox-scoped rules.
 
 After signing in, select `/model` to confirm the model, then try a small
-prompt such as “Reply with one short greeting without inspecting or modifying
-files.” Check `/usage` for the account's quota. Quit and reopen the named
+prompt such as "Reply with one short greeting without inspecting or modifying
+files." Check `/usage` for the account's quota. Quit and reopen the named
 sandbox to check that the login persists.
 
 To choose another entitled model when creating a sandbox, add
