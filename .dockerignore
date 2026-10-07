@@ -1,0 +1,10 @@
+*
+!junie.yaml
+!junie.dockerfile
+!junie-context.md
+!releases.sha256
+!scripts/
+!scripts/*.sh
+!.cache/
+!.cache/.gitkeep
+!.cache/junie-release-*-linux-*.zip

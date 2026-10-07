@@ -1,0 +1,27 @@
+name: Kit test report
+description: Report a Junie sandbox test or a problem
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Share CLI versions and redacted diagnostics only. Keep authorization codes,
+        tokens, credential files, prompts, and private project details out of reports.
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, CPU architecture, sbx version, and kit tag or digest
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: What happened?
+      description: Did manual login, Junie Lite, and reopening the sandbox work? Include the expected and actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Redacted diagnostics
+      description: Optional metadata from scripts/capture-auth.py. Review it before posting.

@@ -1,0 +1,6 @@
+*
+!auth-trace.yaml
+!auth-trace.dockerfile
+!scripts/
+!scripts/*.py
+!scripts/*.sh

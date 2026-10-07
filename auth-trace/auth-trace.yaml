@@ -1,0 +1,35 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: mixin
+displayName: Junie authentication trace
+description: Opt-in, redacted HTTP metadata for diagnosing JetBrains Account login
+version: "1.0.0"
+capabilities:
+  - type: com.docker.sandbox/network-policy@1
+    config:
+      install:
+        allow: [deb.debian.org:80, deb.debian.org:443, security.debian.org:80, security.debian.org:443, pypi.org:443, files.pythonhosted.org:443]
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      install:
+        # Conditional package-manager use deliberately has no hard requires.
+        - command: |
+            set -eu
+            command -v apt-get >/dev/null || { echo 'Authentication tracing needs a Debian-based workload.' >&2; exit 1; }
+            apt-get update
+            apt-get install -y --no-install-recommends python3-venv
+            python3 -m venv /opt/junie-auth-trace
+            /opt/junie-auth-trace/bin/pip install --disable-pip-version-check mitmproxy==12.2.3
+          user: "0"
+          env: [HTTP_PROXY, HTTPS_PROXY, NO_PROXY]
+      startup:
+        - command: [/usr/local/lib/junie-auth-trace/start.sh]
+          user: "0"
+          env: [HTTP_PROXY, HTTPS_PROXY, NO_PROXY]
+  - type: com.docker.sandbox/agent-context@1
+    config:
+      content: |
+        This sandbox has opt-in authentication diagnostics. Metadata is recorded
+        in ~/.junie/auth-trace/events.jsonl. It excludes request and response
+        bodies, header values, query values, and credential values. Unknown path
+        segments are redacted. Do not enable raw HTTP logging or dump credentials.
